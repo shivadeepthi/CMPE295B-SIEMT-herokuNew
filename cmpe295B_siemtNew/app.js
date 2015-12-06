@@ -572,9 +572,9 @@ var io = require('socket.io').listen(app.listen(port,function(){
 	SensorTag.discover(onDiscover);
 })
 );
-/*io.on('connection', function () {		
+io.on('connection', function () {		
 	  //io.set('transports', ['websocket']);		
 	  io.set("transports", ["xhr-polling"]);		
 	  io.set("polling duration", 10);		
-	});*/
+	});
 
