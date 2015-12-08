@@ -4,7 +4,7 @@
 var http = require('http');
 var express = require('express');
 var app = module.exports.app = express();
-var port=3000;
+var port=process.env.PORT ||3000;
 var db;
 var SensorTag = require('sensortag');
 var path = require('path');
@@ -477,8 +477,8 @@ app.get("/suggestedValueAmpTemp",function(req,response){
 });
 
 
-var io = require('socket.io').listen(app.listen(3000,function(){
-	//console.log("We have started our server on port 3000")
+var io = require('socket.io').listen(app.listen(port,function(){
+	//console.log("We have started our server on port ")
 	// SensorTag.discover(function(tag) { and close it with }); above ondiscover mthod
 	function onDiscover(tag){
 
