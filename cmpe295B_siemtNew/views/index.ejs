@@ -34,8 +34,7 @@
     
     <script>  
            <!-- var socket = io.connect('//localhost:3000');-->
-          // var socket=io();
-var socket=io.connect(window.location.hostname);
+           var socket=io();
             socket.on('objTemp', function(data) {
             	$('#status').html("Connected").attr('style','font-size: 30px');
                 $('#objTemp').html(parseInt(data.objTemp));
@@ -473,7 +472,7 @@ var socket=io.connect(window.location.hostname);
 							</ul>	
 						</li>
                         <li><a href="/reports"><i class="icon-align-justify"></i><span class="hidden-tablet"> Reports</span></a></li>
-                        <li><a href="#openModal"><i class="icon-align-justify"></i><span class="hidden-tablet"> Rules</span></a></li>
+                        <li><a href="#openModal"><i class="icon-align-justify"></i><span class="hidden-tablet"> RulesEngine</span></a></li>
                     </ul>
                 </div>
             </div>
