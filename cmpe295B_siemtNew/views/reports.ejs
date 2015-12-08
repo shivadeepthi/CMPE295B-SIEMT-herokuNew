@@ -34,26 +34,6 @@
     overflow: scroll;
 					}
 	    	</style>
-
-
-		<script type="text/javascript">
-
-	$(document).ready(function() {
-    var date = new Date();
-    var day = date.getDate();
-    var month = date.getMonth() + 1;
-    var year = date.getFullYear();
-    
-    if (month < 10) month = "0" + month;
-    if (day < 10) day = "0" + day;
-
-    var today = year + "-" + month + "-" + day;       
-    $("#theDate").attr("value", today);
-});
-
-
-
-		</script>
 		
 		<script type="text/javascript">
 
@@ -63,14 +43,9 @@
     var finalSource="#"+option;
     source = $(finalSource)[0];
 
-    // we support special element handlers. Register them with jQuery-style 
-    // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-    // There is no support for any other type of selectors 
-    // (class, of compound) at this time.
+    //
     specialElementHandlers = {
-        // element with id of "bypass" - jQuery style selector
         '#bypassme': function (element, renderer) {
-            // true = "handled elsewhere, bypass text extraction"
             return true
         }
     };
@@ -80,8 +55,7 @@
         left: 40,
         width: 522
     };
-    // all coords and widths are in jsPDF instance's declared units
-    // 'inches' in this case
+    
     pdf.fromHTML(
     source, // HTML string or DOM elem ref.
     margins.left, // x coord
@@ -119,9 +93,8 @@
 					<a class="brand" href="/"><span>SIEMT</span></a>
 									
 					<!-- start: Header Menu -->
-					<div class="nav-no-collapse header-nav">
+					<!--<div class="nav-no-collapse header-nav">
 						<ul class="nav pull-right">
-							<!-- start: User Dropdown -->
 							<li class="dropdown">
 								<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 									<i class="halflings-icon white user"></i> ..
@@ -135,9 +108,9 @@
 									<li><a href="login.html"><i class="halflings-icon off"></i> Logout</a></li>
 								</ul>
 							</li>
-							<!-- end: User Dropdown -->
+							
 						</ul>
-					</div>
+					</div>-->
 					<!-- end: Header Menu -->
 					
 				</div>
@@ -162,6 +135,10 @@
 							</ul>	
 							</li>
 							<li><a href=/reports><i class="icon-tasks"></i><span class="hidden-tablet"> Reports</span></a></li>
+
+							<li><a href="/#openModal"><i class="icon-tasks"></i><span class="hidden-tablet"> Rule Engine</span></a></li>
+							
+
 						</ul>
 					</div>
 				</div>
@@ -203,29 +180,35 @@
 											<form id= "dataForm">
 											  
 											
-											<select id="drop" name = "parameter" ng-model="formData.option">
-											  <option value="temp" ng-model="formData.temp">Temperature</option>
-											  <option value="pressure" ng-model="formData.pressure">Pressure</option>
-											  <option value="humidity" ng-model="formData.humidity">Humidity</option>
+											<select required id="drop" name = "parameter" ng-model="formData.option">
+											  <option id="tempDrop"value="temp" ng-model="formData.temp">Temperature</option>
+											  <option id="pressureDrop" value="pressure" ng-model="formData.pressure">Pressure</option>
+											  <option id="humidityDrop" value="humidity" selected="selected" ng-model="formData.humidity">Humidity</option>
+											  <option id="AcceleroDrop" value="Accelero" selected="selected" ng-model="formData.Accelero">acceleration</option>
+
 											</select>
 										
-											 	<div>
-											  <input type="date" name="date" id="theDate" ng-model="formData.date">
+
+											  <input required type="date" name="date" id="theDate" ng-model="formData.date">
+
+											  	 &nbsp;&nbsp;&nbsp;&nbsp;
+
 											  <input type="button" id="getData" value="Get data" class="btn btn-info" ng-click="checkOptions()">
-											  </div>
-											  <button id="pdfButton" class="btn btn-info" onclick="javascript:demoFromHTML();">PDF</button>
+												&nbsp;&nbsp;&nbsp;&nbsp;
+											  <button id="pdfButton" class="btn btn-success" onclick="javascript:demoFromHTML();">Click for PDF</button>
 											</form>
 											</div>
 											<div class="drop-down-show-hide"  id="pressure">
 											<table class = "table">
 											<thead>
-											<tr>
+											<tr class = "danger">
 												<th> Time
 											<th> Pressure </th>
 											
 											</thead>
 											<tbody>
-												<tr ng-repeat="datapoint in datalist">
+												<tr class="danger" ng-repeat="datapoint in datalist">
+													<li ng-if="datalist.length===0">No records found</li>
 													<td> {{datapoint.timeStamp}}</td>
 										          <td>{{datapoint.Pressure}}</td>
 										          <!-- <td>{{datapoint.AmbientTemp}}</td> -->
@@ -236,16 +219,46 @@
 											</tbody>
 											</table> 
 										</div>
+
+                                          <div class="drop-down-show-hide"  id="Accelero">
+											<table class = "table">
+											<thead>
+											<tr class = "danger">
+												<th> Time </th>
+											<th> AcceleroX </th>
+											<th> AcceleroY</th>
+											<th> AcceleroZ </th>
+
+
+											
+											</thead>
+											<tbody>
+												<tr class="danger" ng-repeat="datapoint in datalist">
+												<li ng-if="datalist.length===0">No records found</li>
+												
+												<td> {{datapoint.timeStamp}}</td>
+													<td> {{datapoint.AcceleroX}}</td>
+										          <td>{{datapoint.AcceleroY}}</td>
+										          <td>{{datapoint.AcceleroZ}}</td> 
+										         
+										        </tr>	
+
+
+											</tbody>
+											</table> 
+										</div>
+
 											<div class="drop-down-show-hide" id="temp">
 											<table class = "table" >
 											<thead>
-											<tr>
+											<tr class = "danger">
 												<th> Time </th>
 											<th> Object Temperature </th>
 											<th> Ambient Temperature </th>
 											</thead>
 											<tbody>
-												<tr ng-repeat="datapoint in datalist">
+												<tr class="info" ng-repeat="datapoint in datalist">
+													<li ng-if="datalist.length===0">No records found</li>
 													<td> {{datapoint.timeStamp}}</td>
 										          <td>{{datapoint.ObjectTemp}}</td>
 										          <td>{{datapoint.AmbientTemp}}</td>
@@ -260,13 +273,14 @@
 										<div class="drop-down-show-hide" id="humidity">
 										<table class = "table">
 											<thead>
-											<tr>
+											<tr class = "danger">
 												<th> Time
 											<th> Humidity </th>
 											
 											</thead>
 											<tbody>
-												<tr ng-repeat="datapoint in datalist">
+												<tr class="info" ng-repeat="datapoint in datalist">
+													 <li ng-if="datalist.length===0">No records found</li>
 													<td> {{datapoint.timeStamp}}</td>
 										          <td>{{datapoint.Humidity}}</td>
 										         
@@ -287,21 +301,9 @@
 						</div>
 					</div>
 					
-					
-					
-					
-
 				
-				
-				
-			
-							
 				<!--/row-->
 				
-				
-			
-			
-
 		</div><!--/.fluid-container-->
 		
 				<!-- end: Content -->
@@ -403,7 +405,7 @@
 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular.min.js"></script>
 	        <script src="controllers/controller.js"> </script>
 	    	 <script src="js/tablesort.js"> </script>
-	    	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.1.135/jspdf.debug.js"></script>
+	    	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
 	       
 		<!-- end: JavaScript-->
 	    	
