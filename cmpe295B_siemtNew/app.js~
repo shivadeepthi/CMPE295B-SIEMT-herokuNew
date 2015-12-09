@@ -149,7 +149,7 @@ app.post("/sendEmailAlert",function(req,res){
 			var mailOptions={
 					to : "tocmpe295bsiemt@gmail.com",
 					subject :"SIEMT ALERT",
-					text : "Rule condition met"+mess
+					text : "Rule condition met"
 					}
 					//console.log(mailOptions);
 					smtpTransport.sendMail(mailOptions, function(error, response){

@@ -144,12 +144,12 @@ passport.use(new LocalStrategy(function(username, password, done) {
 
 app.post("/sendEmailAlert",function(req,res){
 	//console.log("sending email alert");
-	var mess=JSON.stringify(req.body.mess);
-	console.log("mess"+mess);
+	//var mess=JSON.stringify(req.body.mess);
+	//console.log("mess"+mess);
 			var mailOptions={
 					to : "tocmpe295bsiemt@gmail.com",
 					subject :"SIEMT ALERT",
-					text : "Rule condition met"+mess
+					text : "Rule condition met"
 					}
 					//console.log(mailOptions);
 					smtpTransport.sendMail(mailOptions, function(error, response){
